@@ -36,4 +36,9 @@ public class PostService {
         List<Post> posts = postList.stream().filter(p -> p.getTitle().contains(title)).collect(Collectors.toList());
         return GetPostResponse.toDto(posts);
     }
+
+    public String deletePost(Long postId) {
+        postList.remove((int) (postId-1));
+        return "삭제되었습니다 !";
+    }
 }

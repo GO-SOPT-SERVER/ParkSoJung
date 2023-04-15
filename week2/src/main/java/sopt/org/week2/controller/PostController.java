@@ -41,4 +41,10 @@ public class PostController {
     public List<GetPostResponse> searchPost(@RequestParam final String title) {
         return postService.searchPost(title);
     }
+
+    /**
+     * 게시글 삭제
+     */
+    @DeleteMapping("/post/{postId}")
+    public String deletePost(@PathVariable final Long postId) { return postService.deletePost(postId); }
 }
