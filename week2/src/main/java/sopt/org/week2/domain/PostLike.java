@@ -14,6 +14,10 @@ public class PostLike {
         this.id = id;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public PostLike(Long userId, Long postId, boolean status) {
         this.userId = userId;
         this.postId = postId;
