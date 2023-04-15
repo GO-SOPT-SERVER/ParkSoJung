@@ -12,7 +12,7 @@ import static sopt.org.week2.Week2Application.userList;
 
 @Service
 public class UserService {
-    public Long registerUser(RegisterUserRequest request) {
+    public String registerUser(RegisterUserRequest request) {
 
         User newUser = new User(
                 request.getGender(),
@@ -24,7 +24,7 @@ public class UserService {
         userList.add(newUser);
         newUser.setId((long)userList.size());
 
-        return newUser.getId();
+        return newUser.getId()+"번 유저가 등록되었습니다 !";
 
     }
 

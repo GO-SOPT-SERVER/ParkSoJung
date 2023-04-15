@@ -19,8 +19,7 @@ public class UserController {
      */
     @PostMapping("/user")
     public String registerUser(@RequestBody final RegisterUserRequest request) {
-        Long userId = userService.registerUser(request);
-        return userId + "번 유저가 등록되었습니다 !";
+        return userService.registerUser(request);
     }
 
     /**
