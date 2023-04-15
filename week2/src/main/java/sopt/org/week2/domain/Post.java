@@ -10,9 +10,10 @@ public class Post {
     private String content;
     private Long writer;
 
-    public Post(String title, String content) {
+    public Post(String title, String content, Long writer) {
         this.title = title;
         this.content = content;
+        this.writer = writer;
     }
 
     public void setId(Long id) {

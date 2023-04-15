@@ -18,10 +18,10 @@ public class PostController {
     /**
      * 게시글 등록
      */
-    @PostMapping("/post")
-    public String registerPost(@RequestBody final RegisterPostRequest request) {
-        Long postId = postService.registerPost(request);
-        return postId + "번 게시글이 등록되었습니다 !";
+    @PostMapping("/post/{userId}")
+    public String registerPost(@PathVariable final Long userId,
+                               @RequestBody final RegisterPostRequest request) {
+        return postService.registerPost(userId, request);
     }
 
     /**
