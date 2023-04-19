@@ -17,16 +17,20 @@ public class User {
         this.password = password;
     }
 
-    public boolean getUser(String ssn) {
+    public boolean isUser(String ssn) {
         long isUser = userList.stream()
                 .filter(u -> u.getSsn().equals(ssn)).count();
         return isUser != 0;
     }
 
-    public boolean login(String ssn, String password) {
-        User user = userList.stream()
+    public User getUser(String ssn) {
+        return userList.stream()
                 .filter(u -> u.getSsn().equals(ssn))
                 .findFirst().orElse(null);
+    }
+
+    public boolean login(String ssn, String password) {
+        User user = getUser(ssn);
         if(user.getPassword().equals(password)) return true;
         return false;
     }
