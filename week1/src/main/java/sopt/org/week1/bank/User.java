@@ -1,9 +1,5 @@
 package sopt.org.week1.bank;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static sopt.org.week1.bank.BaseStatus.INVALID_USER;
 import static sopt.org.week1.bank.Main.userList;
 
 public class User {
@@ -15,7 +11,11 @@ public class User {
     public User() {
     }
 
-
+    public User(String name, String ssn, String password) {
+        this.name = name;
+        this.ssn = ssn;
+        this.password = password;
+    }
 
     public boolean getUser(String ssn) {
         long isUser = userList.stream()
@@ -29,6 +29,12 @@ public class User {
                 .findFirst().orElse(null);
         if(user.getPassword().equals(password)) return true;
         return false;
+    }
+
+    public void join(String name, String ssn, String password) {
+        User user = new User(name, ssn, password);
+        user.setId((long) (userList.size()+1));
+        userList.add(user);
     }
 
     public Long getId() {

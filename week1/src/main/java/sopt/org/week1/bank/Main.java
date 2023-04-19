@@ -32,6 +32,7 @@ public class Main {
                     login();
                     break;
                 case 2:
+                    join();
                     break;
                 case 0:
                     System.exit(0);
@@ -59,9 +60,23 @@ public class Main {
         } else showMenu();
     }
 
+    private static void join() {
+        System.out.println("------------------- 회원가입 -------------------");
+        System.out.print("이름: ");
+        String name = scanner.next();
+        System.out.print("주민등록번호: ");
+        String ssn = scanner.next();
+        System.out.print("비밀번호: ");
+        String password = scanner.next();
+
+        user.join(name, ssn, password);
+        System.out.println(name + "님 솝트 은행에 가입되셨습니다!");
+    }
+
     private static void showMenu() {
         System.out.println("1. 예금 | 2. 출금 | 3. 계좌 조회 | 0. 로그아웃");
         System.out.print("번호를 입력해주세요: ");
+
     }
 
 }
