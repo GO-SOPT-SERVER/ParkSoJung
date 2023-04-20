@@ -1,6 +1,6 @@
-package sopt.org.week1.bank;
+package sopt.org.week1.advanced;
 
-import static sopt.org.week1.bank.Main.userList;
+import static sopt.org.week1.advanced.Main.userList;
 
 public class User {
     private Long id;

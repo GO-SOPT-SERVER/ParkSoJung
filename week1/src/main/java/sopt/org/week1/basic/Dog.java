@@ -1,4 +1,4 @@
-package sopt.org.week1;
+package sopt.org.week1.basic;
 
 public class Dog extends Animal {
     private String gender;

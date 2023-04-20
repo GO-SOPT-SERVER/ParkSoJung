@@ -1,4 +1,4 @@
-package sopt.org.week1.bank;
+package sopt.org.week1.advanced;
 
 import java.util.ArrayList;
 import java.util.Scanner;

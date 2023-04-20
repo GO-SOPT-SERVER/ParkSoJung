@@ -1,9 +1,9 @@
-package sopt.org.week1.bank;
+package sopt.org.week1.advanced;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static sopt.org.week1.bank.Main.cAccountList;
+import static sopt.org.week1.advanced.Main.cAccountList;
 
 public class CheckingAccount extends Account{
 

@@ -1,4 +1,4 @@
-package sopt.org.week1;
+package sopt.org.week1.basic;
 
 // 인터페이스 상속
 public class SportsCar implements Car{

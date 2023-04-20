@@ -1,11 +1,11 @@
-package sopt.org.week1.bank;
+package sopt.org.week1.advanced;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static sopt.org.week1.bank.Main.sAccountList;
+import static sopt.org.week1.advanced.Main.sAccountList;
 
 public class SavingAccount extends Account {
     private LocalDateTime expiration;
