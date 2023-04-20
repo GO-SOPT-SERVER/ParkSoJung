@@ -10,13 +10,6 @@ public abstract class Account {
     public Account() {
     }
 
-    public void getAccountInfo(String number){
-    };
-
-    public void deposit(String number, int amount){
-    };
-
-
     public Account(User user, String number, int totalAmount) {
         this.user = user;
         this.number = number;
@@ -31,5 +24,11 @@ public abstract class Account {
         return number;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public abstract String create(User user);
+    public abstract String getAccountInfo(User user);
+    public abstract String deposit(String number, int amount);
 }

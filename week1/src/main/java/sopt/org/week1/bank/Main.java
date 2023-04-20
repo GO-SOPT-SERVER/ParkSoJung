@@ -7,7 +7,7 @@ public class Main {
 
     static Scanner scanner;
     public static ArrayList<User> userList;
-    public static ArrayList<Account> aAccountList;
+    public static ArrayList<CheckingAccount> cAccountList;
     public static ArrayList<SavingAccount> sAccountList;
     private static User user;
     private static CheckingAccount checkingAccount;
@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         userList = new ArrayList<>();
-        aAccountList = new ArrayList<>();
+        cAccountList = new ArrayList<>();
         sAccountList = new ArrayList<>();
         user = new User();
         checkingAccount = new CheckingAccount();
@@ -87,6 +87,8 @@ public class Main {
             case 2:
                 break;
             case 3:
+                getAccountInfo();
+                showMenu();
                 break;
             case 4:
                 createAccount();
@@ -99,6 +101,15 @@ public class Main {
                 break;
         }
 
+    }
+
+    private static void getAccountInfo() {
+        String CAccountInfo = checkingAccount.getAccountInfo(user);
+        System.out.println("------------------- 입출금 계좌 -------------------");
+        System.out.println(CAccountInfo);
+        String SAccountInfo = savingAccount.getAccountInfo(user);
+        System.out.println("------------------- 적금 계좌 -------------------");
+        System.out.println(SAccountInfo);
     }
 
     private static void createAccount() {
@@ -119,13 +130,13 @@ public class Main {
     }
 
     private static void createSAccount() {
-        String number = checkingAccount.create(user);
+        String number = savingAccount.create(user);
         System.out.println("정상적으로 개설되었습니다! (계좌번호: "+number+")");
     }
 
 
     private static void createCAccount() {
-        String number = savingAccount.create(user);
+        String number = checkingAccount.create(user);
         System.out.println("정상적으로 개설되었습니다! (계좌번호: "+number+")");
     }
 

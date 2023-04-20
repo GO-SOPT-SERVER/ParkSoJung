@@ -1,7 +1,11 @@
 package sopt.org.week1.bank;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import static sopt.org.week1.bank.Main.cAccountList;
 import static sopt.org.week1.bank.Main.sAccountList;
 
 public class SavingAccount extends Account {
@@ -15,6 +19,22 @@ public class SavingAccount extends Account {
         return account.getNumber();
     }
 
+    @Override
+    public String getAccountInfo(User user) {
+        long isAccount = sAccountList.stream()
+                .filter(a -> a.getUser().equals(user)).count();
+        if(isAccount == 0) return "개설된 적금 계좌가 없습니다.";
+
+        List<SavingAccount> accountList = sAccountList.stream()
+                .filter(a -> a.getUser().equals(user)).collect(Collectors.toList());
+        return toString(accountList);
+    }
+
+    @Override
+    public String deposit(String number, int amount) {
+        return null;
+    }
+
     public SavingAccount(User user, String number, int totalAmount) {
         super(user, number, totalAmount);
         this.expiration = LocalDateTime.now().plusYears(1);
@@ -22,4 +42,13 @@ public class SavingAccount extends Account {
 
     public SavingAccount() {
     }
+
+    public String toString(List<SavingAccount> accountList) {
+        String accountInfo = "계좌번호 | 금액 | 만기일 " + System.lineSeparator() ;
+        for(SavingAccount a : accountList) {
+            accountInfo = accountInfo + a.number + " | " + a.totalAmount + " | " + a.expiration.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + System.lineSeparator();
+        }
+        return accountInfo;
+    }
+
 }
