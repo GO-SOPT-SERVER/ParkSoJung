@@ -87,6 +87,8 @@ public class Main {
                 showMenu();
                 break;
             case 2:
+                withDraw();
+                showMenu();
                 break;
             case 3:
                 getAccountInfo();
@@ -103,6 +105,14 @@ public class Main {
                 break;
         }
 
+    }
+
+    private static void withDraw() {
+        System.out.print("계좌 번호: ");
+        String number = scanner.next();
+        System.out.print("출금 금액: ");
+        int amount = scanner.nextInt();
+        checkingAccount.withdraw(number, amount);
     }
 
 

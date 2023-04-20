@@ -47,8 +47,21 @@ public class CheckingAccount extends Account{
         System.out.println("계좌 총 금액: " + account.getTotalAmount());
     }
 
-    public String withdraw(String number, int amount) {
-        return null;
+    public void withdraw(String number, int amount) {
+        long isAccount = cAccountList.stream()
+                .filter(a -> a.getNumber().equals(number)).count();
+        if(isAccount == 0) System.out.println("존재하지 않는 입출금 계좌입니다.");
+        else {
+            CheckingAccount account = cAccountList.stream()
+                    .filter(a -> a.getNumber().equals(number)).findAny().orElse(null);
+
+            if (amount > account.getTotalAmount()) System.out.println("출금 금액이 총 금액보다 큽니다.");
+            else {
+                account.setTotalAmount(account.getTotalAmount() - amount);
+                cAccountList.set(Math.toIntExact(account.id - 1), account);
+                System.out.println("계좌 총 금액: " + account.getTotalAmount());
+            }
+        }
     }
 
     public String toString(List<CheckingAccount> accountList) {
@@ -58,4 +71,5 @@ public class CheckingAccount extends Account{
         }
         return accountInfo;
     }
+
 }
