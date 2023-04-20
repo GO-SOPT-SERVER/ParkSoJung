@@ -28,7 +28,15 @@ public abstract class Account {
         return user;
     }
 
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
     public abstract String create(User user);
     public abstract String getAccountInfo(User user);
-    public abstract String deposit(String number, int amount);
+    public abstract void deposit(String number, int amount);
 }

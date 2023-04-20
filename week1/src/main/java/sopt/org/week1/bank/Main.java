@@ -83,6 +83,8 @@ public class Main {
         System.out.print("번호를 입력해주세요: ");
         switch (scanner.nextInt()) {
             case 1:
+                deposit();
+                showMenu();
                 break;
             case 2:
                 break;
@@ -101,6 +103,29 @@ public class Main {
                 break;
         }
 
+    }
+
+
+    private static void deposit() {
+        System.out.println("입금 하실 계좌 종류를 선택해주세요.");
+        System.out.println("1. 입출금 계좌 | 2. 적금 계좌 | 0. 뒤로가기");
+        int menu = scanner.nextInt();
+        System.out.print("계좌 번호: ");
+        String number = scanner.next();
+        System.out.print("입금 금액: ");
+        int amount = scanner.nextInt();
+        switch (menu) {
+            case 1:
+                checkingAccount.deposit(number, amount);
+                break;
+            case 2:
+                savingAccount.deposit(number, amount);
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
     }
 
     private static void getAccountInfo() {

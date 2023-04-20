@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static sopt.org.week1.bank.Main.cAccountList;
 import static sopt.org.week1.bank.Main.sAccountList;
 
 public class SavingAccount extends Account {
@@ -31,8 +30,17 @@ public class SavingAccount extends Account {
     }
 
     @Override
-    public String deposit(String number, int amount) {
-        return null;
+    public void deposit(String number, int amount) {
+        long isAccount = sAccountList.stream()
+                .filter(a -> a.getNumber().equals(number)).count();
+        if(isAccount == 0) System.out.println("존재하지 않는 적금 계좌입니다.");
+
+        SavingAccount account = sAccountList.stream()
+                .filter(a -> a.getNumber().equals(number)).findAny().orElse(null);
+        account.setTotalAmount(account.getTotalAmount()+amount);
+        sAccountList.set(Math.toIntExact(account.id-1), account);
+
+        System.out.println("계좌 총 금액: " + account.getTotalAmount());
     }
 
     public SavingAccount(User user, String number, int totalAmount) {

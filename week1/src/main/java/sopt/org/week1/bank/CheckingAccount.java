@@ -34,8 +34,17 @@ public class CheckingAccount extends Account{
     }
 
     @Override
-    public String deposit(String number, int amount) {
-        return null;
+    public void deposit(String number, int amount) {
+        long isAccount = cAccountList.stream()
+                .filter(a -> a.getNumber().equals(number)).count();
+        if(isAccount == 0) System.out.println("존재하지 않는 입출금 계좌입니다.");
+
+        CheckingAccount account = cAccountList.stream()
+                .filter(a -> a.getNumber().equals(number)).findAny().orElse(null);
+        account.setTotalAmount(account.getTotalAmount()+amount);
+        cAccountList.set(Math.toIntExact(account.id-1), account);
+
+        System.out.println("계좌 총 금액: " + account.getTotalAmount());
     }
 
     public String withdraw(String number, int amount) {
