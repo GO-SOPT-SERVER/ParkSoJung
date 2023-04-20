@@ -10,14 +10,15 @@ public abstract class Account {
     public Account() {
     }
 
+    public abstract String create(User user);
+    public abstract String getAccountInfo(User user);
+    public abstract void deposit(String number, int amount);
+    public abstract Account getAccount(String number);
+
     public Account(User user, String number, int totalAmount) {
         this.user = user;
         this.number = number;
         this.totalAmount = totalAmount;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNumber() {
@@ -28,6 +29,10 @@ public abstract class Account {
         return user;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;
     }
@@ -35,8 +40,4 @@ public abstract class Account {
     public int getTotalAmount() {
         return totalAmount;
     }
-
-    public abstract String create(User user);
-    public abstract String getAccountInfo(User user);
-    public abstract void deposit(String number, int amount);
 }

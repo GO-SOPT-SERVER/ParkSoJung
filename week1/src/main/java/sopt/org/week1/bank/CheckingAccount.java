@@ -35,26 +35,25 @@ public class CheckingAccount extends Account{
 
     @Override
     public void deposit(String number, int amount) {
-        long isAccount = cAccountList.stream()
-                .filter(a -> a.getNumber().equals(number)).count();
-        if(isAccount == 0) System.out.println("존재하지 않는 입출금 계좌입니다.");
+        if(isExistAccount(number) == 0) System.out.println("존재하지 않는 입출금 계좌입니다.");
+        else {
+            CheckingAccount account = getAccount(number);
+            account.setTotalAmount(account.getTotalAmount() + amount);
+            cAccountList.set(Math.toIntExact(account.id - 1), account);
+            System.out.println("계좌 총 금액: " + account.getTotalAmount());
+        }
+    }
 
-        CheckingAccount account = cAccountList.stream()
+    @Override
+    public CheckingAccount getAccount(String number) {
+        return cAccountList.stream()
                 .filter(a -> a.getNumber().equals(number)).findAny().orElse(null);
-        account.setTotalAmount(account.getTotalAmount()+amount);
-        cAccountList.set(Math.toIntExact(account.id-1), account);
-
-        System.out.println("계좌 총 금액: " + account.getTotalAmount());
     }
 
     public void withdraw(String number, int amount) {
-        long isAccount = cAccountList.stream()
-                .filter(a -> a.getNumber().equals(number)).count();
-        if(isAccount == 0) System.out.println("존재하지 않는 입출금 계좌입니다.");
+        if(isExistAccount(number) == 0) System.out.println("존재하지 않는 입출금 계좌입니다.");
         else {
-            CheckingAccount account = cAccountList.stream()
-                    .filter(a -> a.getNumber().equals(number)).findAny().orElse(null);
-
+            CheckingAccount account = getAccount(number);
             if (amount > account.getTotalAmount()) System.out.println("출금 금액이 총 금액보다 큽니다.");
             else {
                 account.setTotalAmount(account.getTotalAmount() - amount);
@@ -71,5 +70,11 @@ public class CheckingAccount extends Account{
         }
         return accountInfo;
     }
+
+    private static long isExistAccount(String number) {
+        return cAccountList.stream()
+                .filter(a -> a.getNumber().equals(number)).count();
+    }
+
 
 }

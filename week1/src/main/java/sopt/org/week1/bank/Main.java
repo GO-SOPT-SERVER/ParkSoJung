@@ -79,6 +79,7 @@ public class Main {
     }
 
     private static void showMenu() {
+        System.out.println("------------------- 메뉴 -------------------");
         System.out.println("1. 예금 | 2. 출금 | 3. 계좌 조회 | 4. 계좌 개설 | 0. 로그아웃");
         System.out.print("번호를 입력해주세요: ");
         switch (scanner.nextInt()) {
@@ -104,17 +105,7 @@ public class Main {
                 System.out.println("** 없는 메뉴입니다. **");
                 break;
         }
-
     }
-
-    private static void withDraw() {
-        System.out.print("계좌 번호: ");
-        String number = scanner.next();
-        System.out.print("출금 금액: ");
-        int amount = scanner.nextInt();
-        checkingAccount.withdraw(number, amount);
-    }
-
 
     private static void deposit() {
         System.out.println("입금 하실 계좌 종류를 선택해주세요.");
@@ -136,6 +127,14 @@ public class Main {
             default:
                 break;
         }
+    }
+
+    private static void withDraw() {
+        System.out.print("계좌 번호: ");
+        String number = scanner.next();
+        System.out.print("출금 금액: ");
+        int amount = scanner.nextInt();
+        checkingAccount.withdraw(number, amount);
     }
 
     private static void getAccountInfo() {
@@ -168,7 +167,6 @@ public class Main {
         String number = savingAccount.create(user);
         System.out.println("정상적으로 개설되었습니다! (계좌번호: "+number+")");
     }
-
 
     private static void createCAccount() {
         String number = checkingAccount.create(user);

@@ -10,6 +10,14 @@ import static sopt.org.week1.bank.Main.sAccountList;
 public class SavingAccount extends Account {
     private LocalDateTime expiration;
 
+    public SavingAccount() {
+    }
+
+    public SavingAccount(User user, String number, int totalAmount) {
+        super(user, number, totalAmount);
+        this.expiration = LocalDateTime.now().plusYears(1);
+    }
+
     @Override
     public String create(User user) {
         SavingAccount account = new SavingAccount(user, String.valueOf((int)(Math.random() * (99999 - 10000 + 1)) + 10000), 0);
@@ -35,20 +43,17 @@ public class SavingAccount extends Account {
                 .filter(a -> a.getNumber().equals(number)).count();
         if(isAccount == 0) System.out.println("존재하지 않는 적금 계좌입니다.");
 
-        SavingAccount account = sAccountList.stream()
-                .filter(a -> a.getNumber().equals(number)).findAny().orElse(null);
+        SavingAccount account = getAccount(number);
         account.setTotalAmount(account.getTotalAmount()+amount);
         sAccountList.set(Math.toIntExact(account.id-1), account);
 
         System.out.println("계좌 총 금액: " + account.getTotalAmount());
     }
 
-    public SavingAccount(User user, String number, int totalAmount) {
-        super(user, number, totalAmount);
-        this.expiration = LocalDateTime.now().plusYears(1);
-    }
-
-    public SavingAccount() {
+    @Override
+    public SavingAccount getAccount(String number) {
+        return sAccountList.stream()
+                .filter(a -> a.getNumber().equals(number)).findAny().orElse(null);
     }
 
     public String toString(List<SavingAccount> accountList) {
