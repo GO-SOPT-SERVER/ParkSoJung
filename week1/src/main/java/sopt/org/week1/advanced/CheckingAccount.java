@@ -16,7 +16,8 @@ public class CheckingAccount extends Account{
 
     @Override
     public String create(User user) {
-        CheckingAccount account = new CheckingAccount(user, String.valueOf((int)(Math.random() * (99999 - 10000 + 1)) + 10000), 0);
+        String randomNumber = String.valueOf((int)(Math.random() * (99999 - 10000 + 1)) + 10000);
+        CheckingAccount account = new CheckingAccount(user, randomNumber, 0);
         account.setId((long) (cAccountList.size()+1));
         cAccountList.add(account);
         return account.getNumber();
