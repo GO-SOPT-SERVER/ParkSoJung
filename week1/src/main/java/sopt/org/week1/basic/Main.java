@@ -1,4 +1,4 @@
-package sopt.org.week1;
+package sopt.org.week1.basic;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

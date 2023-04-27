@@ -1,4 +1,4 @@
-package sopt.org.week1;
+package sopt.org.week1.basic;
 
 class GenericClass <T, E> {
     T type;
