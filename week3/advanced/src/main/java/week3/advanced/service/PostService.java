@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import week3.advanced.controller.dto.assembler.PostAssembler;
 import week3.advanced.controller.dto.request.PostReq;
+import week3.advanced.controller.dto.response.GetPostRes;
 import week3.advanced.controller.dto.response.PostRes;
 import week3.advanced.domain.Post;
 import week3.advanced.domain.User;
@@ -25,5 +26,10 @@ public class PostService {
         User user = userRepository.findById(postReq.getUserIdx()).orElseThrow(null);
         Post post = postRepository.save(postAssembler.toEntity(postReq, user));
         return PostRes.toEntity(post);
+    }
+
+    public GetPostRes getPost(Long postIdx) {
+        Post post = postRepository.findById(postIdx).orElseThrow(null);
+        return GetPostRes.toEntity(post);
     }
 }
