@@ -4,8 +4,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,10 +28,20 @@ public class Post {
     @JoinColumn(name = "userIdx", nullable = false)
     private User user;
 
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist(){
+        createdAt = LocalDateTime.now();
+    }
+
     @Builder
-    public Post(String title, String content, User user) {
+    public Post(String title, String content, User user, LocalDateTime createdAt) {
         this.title = title;
         this.content = content;
         this.user = user;
+        this.createdAt = createdAt;
     }
 }
