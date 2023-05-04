@@ -1,6 +1,7 @@
 package week3.advanced.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,11 @@ public class Post {
     @OneToOne
     @JoinColumn(name = "userIdx", nullable = false)
     private User user;
+
+    @Builder
+    public Post(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
 }
