@@ -1,10 +1,14 @@
 package week3.advanced.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import week3.advanced.controller.dto.request.PostUserReq;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -26,4 +30,12 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Builder
+    public User(String nickname, String email, String phone, String password) {
+        this.nickname = nickname;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+    }
 }
