@@ -32,6 +32,7 @@ public class UserController {
     public ApiResponse<UserLoginResponseDto> login(@RequestBody @Valid final UserLoginRequestDto request) {
         final Long userId = userService.login(request);
         final String token = jwtService.issuedToken(String.valueOf(userId));
-        return ApiResponse.success(Success.LOGIN_SUCCESS, UserLoginResponseDto.of(userId, token));
+        final String refreshToken = jwtService.issuedRefreshToken(String.valueOf(userId));
+        return ApiResponse.success(Success.LOGIN_SUCCESS, UserLoginResponseDto.of(userId, token, refreshToken));
     }
 }

@@ -2,22 +2,25 @@ package com.sopt.week4.config.jwt;
 
 import com.sopt.week4.exception.Error;
 import com.sopt.week4.exception.model.UnauthorizedException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -46,6 +49,27 @@ public class JwtService {
                 .setClaims(claims)
                 .signWith(getSigningKey())
                 .compact();
+    }
+
+    public String issuedRefreshToken(String userId) {
+        final long refreshTokenExpiryTime = 120 * 60 * 7 * 1000L;
+        final Date now = new Date();
+
+        final Claims claims = Jwts.claims()
+                .setSubject("refresh_token")
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + refreshTokenExpiryTime));
+
+        claims.put("userId", userId);
+
+        String refreshToken = Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                .setClaims(claims)
+                .signWith(getSigningKey())
+                .compact();
+
+        redisTemplate.opsForValue().set(String.valueOf(userId), refreshToken, Duration.ofMillis(refreshTokenExpiryTime));
+        return refreshToken;
     }
 
     private Key getSigningKey() {
