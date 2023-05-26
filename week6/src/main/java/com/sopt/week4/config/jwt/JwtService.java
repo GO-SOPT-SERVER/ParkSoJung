@@ -32,7 +32,7 @@ public class JwtService {
     }
 
     // JWT 토큰 발급
-    public String issuedToken(String userId) {
+    public String issuedAccessToken(String userId) {
         final Date now = new Date();
 
         // 클레임 생성
