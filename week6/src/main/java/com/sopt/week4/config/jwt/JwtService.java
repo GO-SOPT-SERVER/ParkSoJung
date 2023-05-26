@@ -31,15 +31,30 @@ public class JwtService {
                 .encodeToString(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
-    // JWT 토큰 발급
+    // Access Token 발급
     public String issuedAccessToken(String userId) {
+        final long accessTokenExpiryTime = 120 * 60 * 1000L;
+        return issuedToken("access_token", accessTokenExpiryTime, userId);
+    }
+
+    // Refresh Token 발급
+    public String issuedRefreshToken(String userId) {
+        final long refreshTokenExpiryTime = 120 * 60 * 7 * 1000L;
+        String refreshToken = issuedToken("refresh_token", refreshTokenExpiryTime, userId);
+
+        redisTemplate.opsForValue().set(String.valueOf(userId), refreshToken, Duration.ofMillis(refreshTokenExpiryTime));
+        return refreshToken;
+    }
+
+    // JWT 토큰 발급
+    public String issuedToken(String tokenName, long expiryTime, String userId) {
         final Date now = new Date();
 
         // 클레임 생성
         final Claims claims = Jwts.claims()
-                .setSubject("access_token")
+                .setSubject(tokenName)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + 120 * 60 * 1000L));
+                .setExpiration(new Date(now.getTime() + expiryTime));
 
         // private claim 등록
         claims.put("userId", userId);
@@ -49,27 +64,6 @@ public class JwtService {
                 .setClaims(claims)
                 .signWith(getSigningKey())
                 .compact();
-    }
-
-    public String issuedRefreshToken(String userId) {
-        final long refreshTokenExpiryTime = 120 * 60 * 7 * 1000L;
-        final Date now = new Date();
-
-        final Claims claims = Jwts.claims()
-                .setSubject("refresh_token")
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + refreshTokenExpiryTime));
-
-        claims.put("userId", userId);
-
-        String refreshToken = Jwts.builder()
-                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .setClaims(claims)
-                .signWith(getSigningKey())
-                .compact();
-
-        redisTemplate.opsForValue().set(String.valueOf(userId), refreshToken, Duration.ofMillis(refreshTokenExpiryTime));
-        return refreshToken;
     }
 
     private Key getSigningKey() {
